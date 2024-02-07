@@ -1,5 +1,5 @@
 FROM nginx:alpine
-WORKDIR /etc/nginx
+WORKDIR /usr/share/nginx/html/
 COPY default.conf /etc/nginx/conf.d/default.conf
-COPY index.html /index/index.html
-COPY style.css style.css
+COPY index.html /usr/share/nginx/html/index.html
+COPY style.css /usr/share/nginx/html/style.css
