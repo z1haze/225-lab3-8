@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: cithit/roseaw:latest
+        image: cithit/cit225-example:latest
         ports:
         - containerPort: 80  # Expose NGINX on port 80
 
@@ -30,5 +30,5 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 80
-      nodePort: 30082 
+      nodePort: 30083 
   type: NodePort
