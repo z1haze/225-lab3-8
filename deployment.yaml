@@ -22,7 +22,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: roseaw-test-service
+  name: roseaw-lb-service
 spec:
   selector:
     app: nginx
