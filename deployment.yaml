@@ -6,14 +6,14 @@ spec:
   replicas: 1  # Number of NGINX pods to run
   selector:
     matchLabels:
-      app: nginx-lb
+      app: nginx
   template:
     metadata:
       labels:
-        app: nginx-lb
+        app: nginx
     spec:
       containers:
-      - name: nginx-lb
+      - name: nginx
         image: cithit/roseaw-test2:latest
         ports:
         - containerPort: 80  # Expose NGINX on port 80
@@ -25,7 +25,7 @@ metadata:
   name: roseaw-lb-service
 spec:
   selector:
-    app: nginx-lb
+    app: nginx
   ports:
     - protocol: TCP
       port: 80
