@@ -22,7 +22,7 @@ spec:
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: nginx-ingress
+  name: nginx
 spec:
   rules: 
   - host: devops7.cit.regionals.miamioh.edu
