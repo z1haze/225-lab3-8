@@ -34,6 +34,13 @@ spec:
             name: nginx-internal-service
             port:
               number: 80
+      - path: /test
+        pathType: ImplementationSpecific
+        backend: 
+          service:
+            name: test-internal-service
+            port:
+              number: 8080
 ---
 apiVersion: v1
 kind: Service
@@ -46,3 +53,15 @@ spec:
   - protocol: TCP
     port: 80
     targetPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: test-internal-service
+spec:
+  selector:
+    app: nginx
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
