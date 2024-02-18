@@ -28,6 +28,7 @@ spec:
   - host: devops7.cit.regionals.miamioh.edu
   http:
     paths: /
+    pathType: ImplementationSpecific
     - backend: 
         service: 
           name: nginx-internal-service
