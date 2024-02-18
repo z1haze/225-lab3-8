@@ -17,7 +17,6 @@ spec:
         image: cithit/roseaw-test2:latest
         ports:
         - containerPort: 80  # Expose NGINX on port 80
-
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -26,23 +25,24 @@ metadata:
 spec:
   rules: 
   - host: devops7.cit.regionals.miamioh.edu
-  http:
-    paths: /
-    pathType: ImplementationSpecific
-    - backend: 
-        service: 
-          name: nginx-internal-service
-        port: 
-          number: 80
-
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend: 
+          service:
+            name: nginx-internal-service
+            port:
+              number: 80
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: nginx-internal-service
-selector:
-  app: nginx
-ports:
- - protocol: TCP
-      port: 80
-      targetPort: 80
+spec:
+  selector:
+    app: nginx
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
