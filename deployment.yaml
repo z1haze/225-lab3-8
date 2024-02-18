@@ -17,7 +17,7 @@ spec:
         image: cithit/roseaw-test2:latest
         ports:
         - containerPort: 80  # Expose NGINX on port 80
-     - name: nginx
+      - name: nginx
         image: cithit/roseaw-test2:latest
         ports:
         - containerPort: 8080  # Expose NGINX on port 8080
