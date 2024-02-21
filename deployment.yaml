@@ -24,7 +24,7 @@ metadata:
   name: nginx
 spec:
   rules: 
-  - host: devops4.cit.regionals.miamioh.edu
+  - host: 
     http:
       paths:
       - path: /
