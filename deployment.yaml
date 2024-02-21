@@ -16,20 +16,7 @@ spec:
       - name: nginx
         image: cithit/roseaw-nginx:latest
         ports:
-        - containerPort: 80  # Expose NGINX on port 80        
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: nginx-internal-service
-spec:
-  selector:
-    app: nginx
-  ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 80
-
+        - containerPort: 80  # Expose NGINX on port 80      
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -47,3 +34,16 @@ spec:
             name: nginx-internal-service
             port:
               number: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-internal-service
+spec:
+  type: LoadBalancer # Change this from ClusterIP or NodePort to LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: nginx # This should match the labels of your Pods
+
