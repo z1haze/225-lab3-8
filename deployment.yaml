@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: roseaw-nginx-deployment
 spec:
-  replicas: 1  # Number of NGINX pods to run
+  replicas: 2  # Number of NGINX pods to run
   selector:
     matchLabels:
       app: nginx
@@ -40,10 +40,9 @@ kind: Service
 metadata:
   name: nginx-internal-service
 spec:
-  type: LoadBalancer # Change this from ClusterIP or NodePort to LoadBalancer
+  type: LoadBalancer 
   ports:
   - port: 80
     targetPort: 80
   selector:
-    app: nginx # This should match the labels of your Pods
-
+    app: nginx 
