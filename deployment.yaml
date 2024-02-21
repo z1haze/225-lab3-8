@@ -32,7 +32,6 @@ spec:
         backend: 
           service:
             name: nginx-internal-service
-            loadBalancerIP: 10.48.228.50
             port:
               number: 80
 ---
@@ -42,8 +41,10 @@ metadata:
   name: nginx-internal-service
 spec:
   type: LoadBalancer 
+  loadBalancerIP: 10.48.228.50
   ports:
-  - port: 80
+  - protocol: TCP
+    port: 80
     targetPort: 80
   selector:
     app: nginx 
