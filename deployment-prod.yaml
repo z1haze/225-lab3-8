@@ -40,8 +40,6 @@ kind: Service
 metadata:
   name: roseaw-prod-service
 spec:
-  type: LoadBalancer 
-  loadBalancerIP: 10.48.228.55
   ports:
   - protocol: TCP
     port: 80
