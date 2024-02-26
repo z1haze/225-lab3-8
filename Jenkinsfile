@@ -94,7 +94,7 @@ pipeline {
     post {
         always {
             junit testResults: 'dastardly-report.xml', skipPublishingChecks: true
-            slackSend color: "#00FF00", message: "Build Completed: ${env.JOB_NAME} ${env.BUILD_NUMBER}"
+            slackSend color: "#good", message: "Build Completed: ${env.JOB_NAME} ${env.BUILD_NUMBER}"
         }
     }
 }
