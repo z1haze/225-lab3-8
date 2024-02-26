@@ -17,7 +17,6 @@ pipeline {
             }
         }
 
-        // Added stage for linting HTML
         stage('Lint HTML') {
             steps {
                 sh 'npm install htmlhint --save-dev'
@@ -48,13 +47,12 @@ pipeline {
                 script {
                     // Set up Kubernetes configuration using the specified KUBECONFIG
                     def kubeConfig = readFile(KUBECONFIG)
-                    // Update deployment.yaml to use the new image tag
-                    sh "sed -i 's|${DOCKER_IMAGE}:latest|${DOCKER_IMAGE}:${IMAGE_TAG}|' deployment1.yaml"
-                    sh "kubectl apply -f deployment1.yaml"
+                    // Update deployment-dev.yaml to use the new image tag
+                    sh "sed -i 's|${DOCKER_IMAGE}:latest|${DOCKER_IMAGE}:${IMAGE_TAG}|' deployment-dev.yaml"
+                    sh "kubectl apply -f deployment-dev.yaml"
                 }
             }
         }
-        // Adding Dastardly Stages
         stage ("Docker Pull Dastardly from Burp Suite container image") {
             steps {
                 sh 'docker pull public.ecr.aws/portswigger/dastardly:latest'
@@ -69,6 +67,17 @@ pipeline {
                     -e BURP_REPORT_FILE_PATH=${WORKSPACE}/dastardly-report.xml \
                     public.ecr.aws/portswigger/dastardly:latest
                 '''
+            }
+        }
+         stage('Deploy to Prod Environment') {
+            steps {
+                script {
+                    // Set up Kubernetes configuration using the specified KUBECONFIG
+                    def kubeConfig = readFile(KUBECONFIG)
+                    // Update deployment2.yaml to use the new image tag
+                    sh "sed -i 's|${DOCKER_IMAGE}:latest|${DOCKER_IMAGE}:${IMAGE_TAG}|' deployment-prod.yaml"
+                    sh "kubectl apply -f deployment-prod.yaml"
+                }
             }
         }
         stage('Check Kubernetes Cluster') {
