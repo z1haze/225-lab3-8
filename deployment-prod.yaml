@@ -31,7 +31,7 @@ spec:
         pathType: ImplementationSpecific
         backend: 
           service:
-            name: internal-service
+            name: roseaw-prod-service
             port:
               number: 80
 ---
