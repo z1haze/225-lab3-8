@@ -74,6 +74,7 @@ pipeline {
                 script {
                     // Set up Kubernetes configuration using the specified KUBECONFIG
                     sh "sed -i 's|${DOCKER_IMAGE}:latest|${DOCKER_IMAGE}:${IMAGE_TAG}|' deployment-prod.yaml"
+                    sh "ls -la"
                     sh "kubectl apply -f deployment-prod.yaml"
                 }
             }
