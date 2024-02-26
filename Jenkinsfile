@@ -94,7 +94,7 @@ pipeline {
     post {
         always {
             junit testResults: 'dastardly-report.xml', skipPublishingChecks: true
-            slackSend baseURL: "cit225ha-sp24", channel: "#builds", message: "Build Started: ${env.JOB_NAME} ${env.BUILD_NUMBER}"
+            slackSend channel: "#builds", message: "Build Started: ${env.JOB_NAME} ${env.BUILD_NUMBER}"
         }
     }
 }
