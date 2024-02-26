@@ -60,7 +60,7 @@ pipeline {
         }
         stage ("Run Dastardly") {
             steps {
-                cleanWs()
+                //cleanWs()
                 sh '''
                     docker run --user $(id -u) -v ${WORKSPACE}:${WORKSPACE}:rw \
                     -e BURP_START_URL=http://10.48.10.181:32000/ \
