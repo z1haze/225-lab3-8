@@ -3,10 +3,10 @@ pipeline {
 
     environment {
         DOCKER_CREDENTIALS_ID = 'roseaw-dockerhub'
-        DOCKER_IMAGE = 'cithit/taylorw8-test1'
+        DOCKER_IMAGE = 'cithit/roseaw'
         IMAGE_TAG = "build-${BUILD_NUMBER}"
-        GITHUB_URL = 'https://github.com/WTaylor8miami/cit225.git'
-        KUBECONFIG = credentials('taylorw8-test-credentials')
+        GITHUB_URL = 'https://github.com/miamioh-roseaw/roseaw.git'
+        KUBECONFIG = credentials('roseaw')
     }
 
     stages {
@@ -43,28 +43,17 @@ pipeline {
             }
         }
 
-        stage('Deploy to Kubernetes') {
+        stage('Deploy to Dev Environment') {
             steps {
                 script {
                     // Set up Kubernetes configuration using the specified KUBECONFIG
                     def kubeConfig = readFile(KUBECONFIG)
                     // Update deployment.yaml to use the new image tag
-                    sh "sed -i 's|${DOCKER_IMAGE}:latest|${DOCKER_IMAGE}:${IMAGE_TAG}|' deployment.yaml"
-                    sh "kubectl apply -f deployment.yaml"
+                    sh "sed -i 's|${DOCKER_IMAGE}:latest|${DOCKER_IMAGE}:${IMAGE_TAG}|' deployment1.yaml"
+                    sh "kubectl apply -f deployment1.yaml"
                 }
             }
         }
-
-        stage('Check Kubernetes Cluster') {
-            steps {
-                script {
-                    sh "kubectl get pods"
-                    sh "kubectl get services"
-                    sh "kubectl get deploy"
-                }
-            }
-        }
-
         // Adding Dastardly Stages
         stage ("Docker Pull Dastardly from Burp Suite container image") {
             steps {
@@ -76,10 +65,19 @@ pipeline {
                 cleanWs()
                 sh '''
                     docker run --user $(id -u) -v ${WORKSPACE}:${WORKSPACE}:rw \
-                    -e BURP_START_URL=https://ginandjuice.shop/ \
+                    -e BURP_START_URL=http://10.48.10.181/ \
                     -e BURP_REPORT_FILE_PATH=${WORKSPACE}/dastardly-report.xml \
                     public.ecr.aws/portswigger/dastardly:latest
                 '''
+            }
+        }
+        stage('Check Kubernetes Cluster') {
+            steps {
+                script {
+                    sh "kubectl get pods"
+                    sh "kubectl get services"
+                    sh "kubectl get deploy"
+                }
             }
         }
     }
