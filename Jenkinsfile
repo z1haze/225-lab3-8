@@ -53,17 +53,17 @@ pipeline {
                 }
             }
         }
-        stage ("Docker Pull Dastardly from Burp Suite container image") {
+        stage ("Pull Dastardly") {
             steps {
                 sh 'docker pull public.ecr.aws/portswigger/dastardly:latest'
             }
         }
-        stage ("Docker run Dastardly from Burp Suite Scan") {
+        stage ("Run Dastardly") {
             steps {
                 cleanWs()
                 sh '''
                     docker run --user $(id -u) -v ${WORKSPACE}:${WORKSPACE}:rw \
-                    -e BURP_START_URL=http://10.48.10.181/ \
+                    -e BURP_START_URL=http://10.48.10.181:32000/ \
                     -e BURP_REPORT_FILE_PATH=${WORKSPACE}/dastardly-report.xml \
                     public.ecr.aws/portswigger/dastardly:latest
                 '''
@@ -74,7 +74,7 @@ pipeline {
                 script {
                     // Set up Kubernetes configuration using the specified KUBECONFIG
                     def kubeConfig = readFile(KUBECONFIG)
-                    // Update deployment2.yaml to use the new image tag
+                    // Update deployment-prod.yaml to use the new image tag
                     sh "sed -i 's|${DOCKER_IMAGE}:latest|${DOCKER_IMAGE}:${IMAGE_TAG}|' deployment-prod.yaml"
                     sh "kubectl apply -f deployment-prod.yaml"
                 }
