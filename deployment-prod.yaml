@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: roseaw-deployment
+  name: roseaw-prod-deployment
 spec:
   replicas: 1  # Number of NGINX pods to run
   selector:
@@ -38,7 +38,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: internal-service
+  name: roseaw-prod-service
 spec:
   type: LoadBalancer 
   loadBalancerIP: 10.48.228.55
