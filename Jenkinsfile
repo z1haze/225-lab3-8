@@ -69,7 +69,23 @@ pipeline {
                 '''
             }
         }
-         stage('Deploy to Prod Environment') {
+        stage ("Pull Selenium") {
+            steps {
+                sh 'docker pull public.ecr.aws/portswigger/dastardly:latest'
+            }
+        }
+        stage ("Run Selenium") {
+            steps {
+                //cleanWs()
+                sh '''
+                    docker run --user $(id -u) -v ${WORKSPACE}:${WORKSPACE}:rw \
+                    -e BURP_START_URL=http://10.48.10.181:32000/ \
+                    -e BURP_REPORT_FILE_PATH=${WORKSPACE}/dastardly-report.xml \
+                    public.ecr.aws/portswigger/dastardly:latest
+                '''
+            }
+        }        
+        stage('Deploy to Prod Environment') {
             steps {
                 script {
                     // Set up Kubernetes configuration using the specified KUBECONFIG
