@@ -71,7 +71,7 @@ pipeline {
         }
         stage ("Pull Selenium") {
             steps {
-                sh 'docker run -d -p 4442:4444 -p 7905:7905 --shm-size="2g" selenium/standalone-chrome:latest'
+                sh 'docker run -d -p 4443:4444 -p 7906:7906 --shm-size="2g" selenium/standalone-chrome:latest'
             }
         }
 //        stage ("Run Selenium") {
