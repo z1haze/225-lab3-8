@@ -38,8 +38,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: selenium-prod-service
+  name: prod-internal-service
 spec:
+  type: LoadBalancer 
+  loadBalancerIP: 10.48.10.115 # <-----change this!!!!
   ports:
   - protocol: TCP
     port: 80
