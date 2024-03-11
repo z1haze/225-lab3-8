@@ -6,7 +6,7 @@ pipeline {
         DOCKER_IMAGE = 'cithit/roseaw'
         IMAGE_TAG = "build-${BUILD_NUMBER}"
         GITHUB_URL = 'https://github.com/miamioh-roseaw/roseaw.git'
-        KUBECONFIG = credentials('roseaw')
+        KUBECONFIG = credentials('roseaw-metal')
     }
 
     stages {
@@ -63,7 +63,7 @@ pipeline {
                 //cleanWs()
                 sh '''
                     docker run --user $(id -u) -v ${WORKSPACE}:${WORKSPACE}:rw \
-                    -e BURP_START_URL=http://10.48.10.181:32000/ \
+                    -e BURP_START_URL=http://10.48.10.153/ \
                     -e BURP_REPORT_FILE_PATH=${WORKSPACE}/dastardly-report.xml \
                     public.ecr.aws/portswigger/dastardly:latest
                 '''
@@ -71,18 +71,18 @@ pipeline {
         }
         stage ("Pull Selenium") {
             steps {
-                sh 'docker pull public.ecr.aws/portswigger/dastardly:latest'
+                sh 'docker run -d -p 4444:4444 -p 7900:7900 --shm-size="2g" selenium/standalone-chrome:latest'
             }
         }
-        stage ("Run Selenium") {
-            steps {
-                //cleanWs()
-                sh '''
-                    docker run --user $(id -u) -v ${WORKSPACE}:${WORKSPACE}:rw \
-                    -e BURP_START_URL=http://10.48.10.181:32000/ \
-                    -e BURP_REPORT_FILE_PATH=${WORKSPACE}/dastardly-report.xml \
-                    public.ecr.aws/portswigger/dastardly:latest
-                '''
+//        stage ("Run Selenium") {
+//            steps {
+//                //cleanWs()
+//                sh '''
+//                    docker run --user $(id -u) -v ${WORKSPACE}:${WORKSPACE}:rw \
+//                    -e BURP_START_URL=http://10.48.10.153/ \
+//                    -e BURP_REPORT_FILE_PATH=${WORKSPACE}/dastardly-report.xml \
+//                    public.ecr.aws/portswigger/dastardly:latest
+//                '''
             }
         }        
         stage('Deploy to Prod Environment') {
