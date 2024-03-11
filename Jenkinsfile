@@ -71,7 +71,7 @@ pipeline {
         }
         stage ("Pull Selenium") {
             steps {
-                sh 'docker run -d -p 4443:4444 -p 7906:7906 --shm-size="2g" selenium/standalone-chrome:latest'
+                sh 'docker run -d -p 4449:4444 -p 7907:7907 --shm-size="2g" selenium/standalone-chrome:latest'
             }
         }
 //        stage ("Run Selenium") {
@@ -92,7 +92,7 @@ pipeline {
                     //sh "ls -la"
                     sh "sed -i 's|${DOCKER_IMAGE}:latest|${DOCKER_IMAGE}:${IMAGE_TAG}|' deployment-prod.yaml"
                     sh "cd .."
-                    sh "kubectl apply -f deployment-prod.yaml"
+                    sh "kubectl apply -f deployment-prod.yaml --validate=false"
                 }
             }
         }
