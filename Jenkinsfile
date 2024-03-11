@@ -5,7 +5,7 @@ pipeline {
         DOCKER_CREDENTIALS_ID = 'roseaw-dockerhub'
         DOCKER_IMAGE = 'cithit/selenium'
         IMAGE_TAG = "build-${BUILD_NUMBER}"
-        GITHUB_URL = 'https://github.com/miamioh-roseaw/roseaw.git'
+        GITHUB_URL = 'https://github.com/miamioh-cit/selenium.git'
         KUBECONFIG = credentials('roseaw-metal')
     }
 
