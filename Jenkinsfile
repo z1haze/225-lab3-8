@@ -105,7 +105,7 @@ pipeline {
                 }
             }
         }
-
+    }
     post {
         always {
             junit testResults: 'dastardly-report.xml', skipPublishingChecks: true
