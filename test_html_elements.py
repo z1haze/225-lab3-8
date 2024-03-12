@@ -17,7 +17,7 @@ class HtmlElementsTestCase(unittest.TestCase):
 
     def test_navigate_to_website(self):
         # Navigate to the website and then quit the browser.
-        self.driver.get("http://10.48.10.153")
+        self.driver.get("http://10.48.10.174")
 
     def tearDown(self):
         # Quit the driver after test execution.
