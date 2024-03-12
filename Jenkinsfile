@@ -56,7 +56,15 @@ pipeline {
 
         stage ("Pull Selenium") {
             steps {
-                sh 'docker run -d -p 4444:4444 -p 7800:7800 --shm-size="2g" selenium/standalone-chrome:latest'
+                def seleniumExists = "selenium/standalone-chrome:any"
+                if (seleniumExists == '') {
+                        // Image does not exist, so build it
+                        echo "Image ${imageName} not found. Building..."
+                        sh 'docker run -d -p 4444:4444 -p 7800:7800 --shm-size="2g" selenium/standalone-chrome:latest'
+                    } else {
+                        // Image exists
+                        echo "Image ${imageName} already exists."
+                }
             }
         }
         
