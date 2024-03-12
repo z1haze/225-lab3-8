@@ -69,8 +69,8 @@ pipeline {
         
         stage ("Delete Selenium Container") {
             steps {
-                //cleanWs()
-                sh "docker kill $(docker ps -q\$5)"
+                sh 'containers=$(docker ps -q)'
+                sh "docker kill containers"
             }
         } 
   
