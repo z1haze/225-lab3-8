@@ -119,8 +119,16 @@ pipeline {
         always {
             junit testResults: 'dastardly-report.xml', skipPublishingChecks: true
         }
-        success {
-            slackSend message: "Build Completed: ${env.JOB_NAME} ${env.BUILD_NUMBER}"
+            post {
+                success {
+                    slackSend color: "good", message: "Build Completed: ${env.JOB_NAME} ${env.BUILD_NUMBER}"
+                }
+                warning {
+                    slackSend color: "warning", message: "Build Completed: ${env.JOB_NAME} ${env.BUILD_NUMBER}"
+                }
+                failure {
+                    slackSend color: "danger", message: "Build Completed: ${env.JOB_NAME} ${env.BUILD_NUMBER}"
+                }
+            }
         }
-    }
 }
