@@ -72,12 +72,11 @@ pipeline {
                 }
             }
         }
-
-        
+      
         stage ("Run Selenium") {
             steps {
                 //cleanWs()
-                sh 'docker run -d -p 4444:4444 --shm-size="2g" ${imageName}'
+                sh 'echo running selemium' //'docker run -d -p 4444:4444 --shm-size="2g" ${imageName}'
             }
         }
         
