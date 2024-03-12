@@ -64,7 +64,7 @@ pipeline {
             steps {
                 //cleanWs()
                 sh '''
-                    docker run --user $(id -u) -v ${WORKSPACE}:${WORKSPACE}:rw \
+                    //docker run --user $(id -u) -v ${WORKSPACE}:${WORKSPACE}:rw \
                 '''
             }
         }        
