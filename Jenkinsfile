@@ -63,9 +63,7 @@ pipeline {
         stage ("Run Selenium") {
             steps {
                 //cleanWs()
-                sh '''
-                    //docker run --user $(id -u) -v ${WORKSPACE}:${WORKSPACE}:rw \
-                '''
+                sh "echo 'selenium run steps here'"
             }
         }        
   
