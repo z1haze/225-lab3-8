@@ -56,7 +56,7 @@ pipeline {
 
         stage ("Pull Selenium") {
             steps {
-                sh 'docker run -d -p 4444:4444 -p 7800:7800 --shm-size="2g" selenium/standalone-chrome:latest'
+                sh 'docker run -d -p 4444:4444 -p 7801:7801 --shm-size="2g" selenium/standalone-chrome:latest'
             }
         }
         
@@ -65,9 +65,6 @@ pipeline {
                 //cleanWs()
                 sh '''
                     docker run --user $(id -u) -v ${WORKSPACE}:${WORKSPACE}:rw \
-                    -e BURP_START_URL=http://10.48.10.174 \
-                    -e BURP_REPORT_FILE_PATH=${WORKSPACE}/dastardly-report.xml \
-                    public.ecr.aws/portswigger/dastardly:latest
                 '''
             }
         }        
