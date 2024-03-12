@@ -65,7 +65,14 @@ pipeline {
                 //cleanWs()
                 sh "echo 'selenium run steps here'"
             }
-        }        
+        }
+        
+        stage ("Delete Selenium Container") {
+            steps {
+                //cleanWs()
+                sh "docker kill $(docker ps -q)"
+            }
+        } 
   
         stage ("Pull Dastardly") {
             steps {
