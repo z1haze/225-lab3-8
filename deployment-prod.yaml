@@ -41,7 +41,7 @@ metadata:
   name: selenium-prod-service
 spec:
   type: LoadBalancer 
-  loadBalancerIP: 10.48.10.115 # <-----change this!!!!
+  loadBalancerIP: 10.48.10.116 # <-----change this!!!!
   ports:
   - protocol: TCP
     port: 80
