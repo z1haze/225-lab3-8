@@ -90,7 +90,7 @@ pipeline {
                     //sh "ls -la"
                     sh "sed -i 's|${DOCKER_IMAGE}:latest|${DOCKER_IMAGE}:${IMAGE_TAG}|' deployment-prod.yaml"
                     sh "cd .."
-                    sh "kubectl apply -f deployment-prod.yaml --validate=false"
+                    sh "kubectl apply -f deployment-prod.yaml"
                 }
             }
         }
