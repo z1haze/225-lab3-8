@@ -122,7 +122,7 @@ pipeline {
         success {
             slackSend color: "good", message: "Build Completed: ${env.JOB_NAME} ${env.BUILD_NUMBER}"
         }
-        warning {
+        unstable {
             slackSend color: "warning", message: "Build Completed: ${env.JOB_NAME} ${env.BUILD_NUMBER}"
         }
         failure {
