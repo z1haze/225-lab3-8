@@ -83,13 +83,6 @@ pipeline {
             }
         }
         
-        stage ("Delete Selenium Container") {
-            steps {
-                sh 'sel=$(docker ps -q)'
-                sh "docker kill $sel"
-            }
-        } 
-  
         stage ("Pull Dastardly") {
             steps {
                 sh 'docker pull public.ecr.aws/portswigger/dastardly:latest'
