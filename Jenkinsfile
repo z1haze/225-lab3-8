@@ -61,12 +61,10 @@ pipeline {
                     def imageName = 'selenium/standalone-chrome:latest'
                     // Check if the image exists
                     def imageExists = sh(script: "docker images -q ${imageName}", returnStdout: true).trim()
-
                     if (imageExists == '') {
-                // Image does not exist, so pull it
+                        // Image does not exist, so pull it
                         echo "Image ${imageName} not found. Pulling..."
-                sh "docker pull ${imageName}"
-                        sh 'docker run -d -p 4444:4444 --shm-size="2g" ${imageName}'
+                        sh "docker pull ${imageName}"
                     } else {
                         // Image exists
                         echo "Image ${imageName} already exists."
@@ -79,7 +77,7 @@ pipeline {
         stage ("Run Selenium") {
             steps {
                 //cleanWs()
-                sh "echo 'selenium run steps here'"
+                sh 'docker run -d -p 4444:4444 --shm-size="2g" ${imageName}'
             }
         }
         
