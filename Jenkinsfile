@@ -75,7 +75,7 @@ pipeline {
       
         stage ("Run Selenium") {
             steps {
-                //cleanWs()
+                cleanWs()
                 sh 'echo running selemium' //'docker run -d -p 4444:4444 --shm-size="2g" ${imageName}'
             }
         }
