@@ -6,7 +6,7 @@ pipeline {
         DOCKER_IMAGE = 'cithit/selenium'
         IMAGE_TAG = "build-${BUILD_NUMBER}"
         GITHUB_URL = 'https://github.com/miamioh-cit/selenium.git'
-        KUBECONFIG = credentials('roseaw-metal')
+        KUBECONFIG = credentials('roseaw-selenium')
     }
 
     stages {
@@ -63,7 +63,7 @@ pipeline {
                 //cleanWs()
                 sh '''
                     docker run --user $(id -u) -v ${WORKSPACE}:${WORKSPACE}:rw \
-                    -e BURP_START_URL=http://10.48.10.153/ \
+                    -e BURP_START_URL=http://10.48.10.174/ \
                     -e BURP_REPORT_FILE_PATH=${WORKSPACE}/dastardly-report.xml \
                     public.ecr.aws/portswigger/dastardly:latest
                 '''
@@ -74,17 +74,17 @@ pipeline {
                 sh 'docker run -d -p 4450:4444 -p 7908:7908 --shm-size="2g" selenium/standalone-chrome:latest'
             }
         }
-//        stage ("Run Selenium") {
-//            steps {
-//                //cleanWs()
-//                sh '''
-//                    docker run --user $(id -u) -v ${WORKSPACE}:${WORKSPACE}:rw \
-//                    -e BURP_START_URL=http://10.48.10.153/ \
-//                    -e BURP_REPORT_FILE_PATH=${WORKSPACE}/dastardly-report.xml \
-//                    public.ecr.aws/portswigger/dastardly:latest
-//                '''
-//            }
-//        }        
+        stage ("Run Selenium") {
+            steps {
+                //cleanWs()
+                sh '''
+                    docker run --user $(id -u) -v ${WORKSPACE}:${WORKSPACE}:rw \
+                    -e BURP_START_URL=http://10.48.10.174 \
+                    -e BURP_REPORT_FILE_PATH=${WORKSPACE}/dastardly-report.xml \
+                    public.ecr.aws/portswigger/dastardly:latest
+                '''
+            }
+        }        
         stage('Deploy to Prod Environment') {
             steps {
                 script {
@@ -109,7 +109,7 @@ pipeline {
     post {
         always {
             junit testResults: 'dastardly-report.xml', skipPublishingChecks: true
-            slackSend color: "good", message: "Build Completed: ${env.JOB_NAME} ${env.BUILD_NUMBER}"
+            slackSend message: "Build Completed: ${env.JOB_NAME} ${env.BUILD_NUMBER}"
         }
     }
 }
