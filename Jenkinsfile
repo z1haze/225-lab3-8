@@ -54,40 +54,23 @@ pipeline {
             }
         }
 
-         stage ("Pull Selenium") {
+         stage("Run Acceptance Tests") {
             steps {
                 script {
-                    // Define the image name and tag
-                    def imageName = 'selenium/standalone-chrome:latest'
-                    // Check if the image exists
-                    def imageExists = sh(script: "docker images -q ${imageName}", returnStdout: true).trim()
-                    if (imageExists == '') {
-                        // Image does not exist, so pull it
-                        echo "Image ${imageName} not found. Pulling..."
-                        sh "docker pull ${imageName}"
-                    } else {
-                        // Image exists
-                        echo "Image ${imageName} already exists."
-                    }
+                    sh 'docker stop qa-tests || true'
+                    sh 'docker rm qa-tests || true'
+                    sh 'docker build -t qa-tests -f Dockerfile.test .'
+                    sh 'docker run qa-tests'
+                    sh 'docker stop qa-tests || true'
+                    sh 'docker rm qa-tests || true'
                 }
             }
         }
-      
-        stage ("Run Selenium") {
-            steps {
-                sh 'echo running selemium' //'docker run -d -p 4444:4444 --shm-size="2g" ${imageName}'
-            }
-        }
         
-        stage ("Pull Dastardly") {
-            steps {
-                sh 'docker pull public.ecr.aws/portswigger/dastardly:latest'
-            }
-        }
-        
-        stage ("Run Dastardly") {
+        stage ("Run Security Tests") {
             steps {
                 //                                                                 ###change the IP address in this section to your cluster IP address!!!!####
+                sh 'docker pull public.ecr.aws/portswigger/dastardly:latest'
                 sh '''
                     docker run --user $(id -u) -v ${WORKSPACE}:${WORKSPACE}:rw \
                     -e BURP_START_URL=http://10.48.10.174 \
