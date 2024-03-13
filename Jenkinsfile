@@ -6,7 +6,7 @@ pipeline {
         DOCKER_IMAGE = 'cithit/selenium'                                                                    //<------change this
         IMAGE_TAG = "build-${BUILD_NUMBER}"
         GITHUB_URL = 'https://github.com/miamioh-cit/225-lab3-7.git'                                          //<------change this
-        KUBECONFIG = credentials('roseaw-selenium')                                                         //<------change this
+        KUBECONFIG = credentials('roseaw-225')                                                         //<------change this
     }
 
     stages {
@@ -84,6 +84,7 @@ pipeline {
                 sh 'docker pull public.ecr.aws/portswigger/dastardly:latest'
             }
         }
+        
         stage ("Run Dastardly") {
             steps {
                 //                                                                 ###change the IP address in this section to your cluster IP address!!!!####
@@ -95,6 +96,7 @@ pipeline {
                 '''
             }
         }
+        
        stage('Deploy to Prod Environment') {
             steps {
                 script {
@@ -114,6 +116,7 @@ pipeline {
             }
         }
     }
+    
     post {
         always {
             junit testResults: 'dastardly-report.xml', skipPublishingChecks: true
