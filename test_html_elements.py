@@ -1,28 +1,30 @@
-'''
-import unittest
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.firefox.options import Options
+import unittest
 
-class HtmlElementsTestCase(unittest.TestCase):
-
+class TestH5Tag(unittest.TestCase):
     def setUp(self):
-        options = Options()
-        options.add_argument("--headless")
-        options.add_argument("--no-sandbox")
-        options.add_argument("--disable-dev-shm-usage")
-        options.add_argument("--disable-gpu")
-        options.add_argument("--user-data-dir=/tmp/chrome_user_data")
+        # Setup Firefox options
+        firefox_options = Options()
+        firefox_options.add_argument("--headless")  # Ensures the browser window does not open
+        firefox_options.add_argument("--no-sandbox")
+        firefox_options.add_argument("--disable-dev-shm-usage")
+        self.driver = webdriver.Firefox(options=firefox_options)
 
-        self.driver = webdriver.Chrome(options=options)
-
-    def test_navigate_to_website(self):
-        # Navigate to the website and then quit the browser.
-        self.driver.get("http://10.48.10.174")
+    def test_h5_tag_content(self):
+        driver = self.driver
+        driver.get("http://10.48.10.170")  # Replace with your target website
+        
+        # Locate the <h5> tag and get its text
+        h5_text = driver.find_element(By.TAG_NAME, "h5").text
+        
+        # Assert that the text of the <h5> tag is "Lab 3-7 Works!"
+        self.assertEqual("Lab 3-7 Works!", h5_text, "The <h5> tag does not contain the text 'Lab 3-7 Works!'")
 
     def tearDown(self):
-        # Quit the driver after test execution.
         self.driver.quit()
 
 if __name__ == "__main__":
     unittest.main()
-'''
