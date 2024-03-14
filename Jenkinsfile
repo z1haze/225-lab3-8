@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         GITHUB_URL = 'https://github.com/miamioh-cit/225-lab3-8.git'                                    //<------change this
-        KUBECONFIG = credentials('roseaw-225')                                                         //<------change this
+        KUBECONFIG = credentials('roseaw-225')                                                          //<------change this
     }
 
     stages {
@@ -17,7 +17,6 @@ pipeline {
         stage('Build Mongo Stateful Set') {
             steps {
                 script {
-                    //sh 'kubectl apply -f mongo-secret.yaml'
                     sh 'kubectl apply -f mongo.yaml'
                     sh 'kubectl apply -f mongo-configmap.yaml'
                     sh 'kubectl apply -f mongo-express.yaml'
