@@ -1,4 +1,4 @@
-1) From terminal or command ine issue the following command:
+1) From terminal or command line issue the following command:
     echo -n 'username' | base64
 2) Use the resulting base64 encoded username in your mongo-secret.yaml
 
