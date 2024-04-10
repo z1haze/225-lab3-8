@@ -1,10 +1,12 @@
-1) From terminal or command line issue the following command:
+1) From Mac terminal issue the following command:
     echo -n 'username' | base64
-2) Use the resulting base64 encoded username in your mongo-secret.yaml
+   -or- browse to base64encode.org and enter the text you want to encode.
+   
+3) Use the resulting base64 encoded username in your mongo-secret.yaml
 
-3) From terminal or command ine issue the following command:
+4) From terminal or command ine issue the following command:
    echo -n 'password' | base64
 
-4) Use the resulting base64 encoded username in your mongo-secret.yaml. 
+5) Use the resulting base64 encoded username in your mongo-secret.yaml. 
 
-5) Add your mongo-secret.yaml to your kubernetes cluster manually.  Delete the mongo-secret.yaml from your repository.
+6) Add your mongo-secret.yaml to your kubernetes cluster manually.  Delete the mongo-secret.yaml from your repository.
