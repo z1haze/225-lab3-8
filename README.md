@@ -1,5 +1,5 @@
 # Lab3-8 Using MongoDB and MongoExpress
-Learn how to integrate a database in Kubernetes.  You can clone this repository.  Then read "SECRETS.md" for an explaination on how to manage the database username.  When Mongo-Express opens, you will use the username of "admin" and a password of "pass" to access it.  MogoExpress will run on your __LoadBalanced IP port :8081__.
+Learn how to integrate a database in Kubernetes.  You can clone this repository.  Then read "SECRETS.md" for an explaination on how to manage the database username. You will choose your own username and password, which you will encode base64.  After running your pipeline, you will open MongoExpress.   MogoExpress will run on your __LoadBalanced IP port :8081__. When Mongo-Express opens, you will use the username of "admin" and a password of "pass" to access it.
 
 1) Create a new blank repository in your GitHub account using the lab name above.
 2) Copy the URL of this repository and paste it into your repository.
