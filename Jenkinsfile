@@ -2,8 +2,8 @@ pipeline {
     agent any 
 
     environment {
-        GITHUB_URL = 'https://github.com/miamioh-cit/225-lab3-8.git'                                    //<------change this
-        KUBECONFIG = credentials('roseaw-225')                                                          //<------change this
+        GITHUB_URL = 'https://github.com/z1haze/225-lab3-8.git'                                    //<------change this
+        KUBECONFIG = credentials('hendris3-225')                                                          //<------change this
     }
 
     stages {
